@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <script>
+      function login(){
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/user/login', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function(ev){
+          let response = JSON.parse(xhr.response);
+          console.log(response);
+          if(response.result){
+            document.cookie = "session=" + response.session +";";
+            window.location.href = "/";
+          }
+        }
+        let data = {
+          userId : document.getElementById('userId').value,
+          password : document.getElementById('password').value
+        }
+        xhr.send(JSON.stringify(data));
+      }
+
+      function register(){
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/user/register', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function(ev){
+          let response = JSON.parse(xhr.response);
+          console.log(response);
+        }
+        let data = {
+          userId : document.getElementById('userId').value,
+          password : document.getElementById('password').value
+        }
+        xhr.send(JSON.stringify(data));
+      }
+    </script>
+  </head>
+  <body>
+  <h1>Login</h1>
+  <div>
+    <div>
+      <input type="text" id="userId" placeholder="userId">
+    </div>
+    <div>
+      <input type="password" id="password" placeholder="password">
+    </div>
+    <div>
+      <button onclick="login()">Login</button>
+      <button onclick="register()">Register</button>
+    </div>`
+  </div>
+  </body>
+</html>
